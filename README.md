@@ -139,3 +139,7 @@ recompression),
 including redaction, original-text replacement, signatures, merged page order,
 cropped/rotated geometry, and PDF user units. No test uses live documents or
 external accounts. Browser acceptance and screenshots are separate checks.
+
+Release QA (real-upload end-to-end tests with fixed input files, screenshots,
+hallmark and impeccable review, live GA4 and Search Console checks) is written
+up as a skill in `.claude/skills/qa/SKILL.md`, with its scripts beside it.
