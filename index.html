@@ -3,14 +3,180 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#f4f2ef" />
-    <meta name="description" content="Edit, annotate, sign, redact, and organize PDFs in your browser. Your documents stay on your device." />
-    <title>PDF Workspace — A little less paperwork</title>
+    <title>Free PDF Editor Online: Edit, Sign and Redact PDFs in Your Browser</title>
+    <meta
+      name="description"
+      content="Edit PDF text, add text boxes, sign, highlight, redact, merge, rotate and reorder pages for free. Files are processed in your browser and never uploaded. No account."
+    />
+    <link rel="canonical" href="https://firstprayer.github.io/pdf-editor/" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#1d2536" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="PDF Editor" />
+    <meta property="og:title" content="Free PDF Editor: edit, sign and redact PDFs in your browser" />
+    <meta
+      property="og:description"
+      content="Edit text, sign, highlight, redact, merge and reorder PDF pages. Your files stay on your device; nothing is uploaded."
+    />
+    <meta property="og:url" content="https://firstprayer.github.io/pdf-editor/" />
+    <meta property="og:image" content="https://firstprayer.github.io/pdf-editor/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="PDF Editor with a two-page agreement open, page thumbnails on the left and editing tools above." />
+    <meta property="og:locale" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Free PDF Editor: edit, sign and redact PDFs in your browser" />
+    <meta
+      name="twitter:description"
+      content="Edit text, sign, highlight, redact, merge and reorder PDF pages. Your files stay on your device."
+    />
+    <meta name="twitter:image" content="https://firstprayer.github.io/pdf-editor/og-image.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebApplication",
+            "@id": "https://firstprayer.github.io/pdf-editor/#app",
+            "name": "PDF Editor",
+            "url": "https://firstprayer.github.io/pdf-editor/",
+            "description": "A free PDF editor that runs in the browser. Edit text, add text boxes, sign, highlight, draw, redact, insert images, merge, rotate, reorder and delete pages. Files are processed on the device and never uploaded.",
+            "applicationCategory": "BusinessApplication",
+            "operatingSystem": "Any (modern web browser)",
+            "browserRequirements": "Requires JavaScript and a modern browser such as Chrome, Edge, Firefox or Safari.",
+            "isAccessibleForFree": true,
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+            "featureList": [
+              "Edit existing PDF text",
+              "Add text boxes",
+              "Draw or type a signature",
+              "Highlight and freehand drawing",
+              "Permanent redaction",
+              "Insert PNG or JPEG images",
+              "Merge PDFs",
+              "Rotate, reorder, duplicate and delete pages"
+            ],
+            "screenshot": "https://firstprayer.github.io/pdf-editor/og-image.png"
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Are my PDF files uploaded to a server?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "No. The editor opens, edits and saves PDFs entirely in your browser. Documents are never sent to a server, and the original file on your device is not changed."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Is the PDF editor free?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. There is no account, no watermark and no paid tier."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Can I edit the existing text in a PDF?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes, for horizontal, selectable text. The replacement uses a standard PDF font on a white background, so it will not match the original font exactly, and the edited page is flattened to an image with searchable replacement text."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Does redaction really remove the text?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. A redacted page is rebuilt from sanitized pixels, so the original text, images and hidden annotation text on that page are not copied into the downloaded file."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What are the limits?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Up to 50 MB per PDF, 100 MB in total and 200 pages. OCR, password-protected PDFs, form-field editing and certificate-based digital signatures are not supported."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
-    <noscript>PDF Workspace needs JavaScript to edit documents locally. Enable JavaScript and reload.</noscript>
+    <noscript>
+      <p class="noscript-note">PDF Editor needs JavaScript to open and edit documents in your browser. Enable JavaScript and reload the page.</p>
+    </noscript>
+
+    <section class="about" aria-labelledby="about-title">
+      <div class="about-inner">
+        <h1 id="about-title">Free PDF editor that works in your browser</h1>
+        <p class="about-lead">
+          Open a PDF, change it, and download the result. Editing happens on your device, so your
+          documents are never uploaded. There is no account, no watermark and nothing to install.
+        </p>
+
+        <div class="about-grid">
+          <section aria-labelledby="features-title">
+            <h2 id="features-title">What you can do</h2>
+            <ul>
+              <li><strong>Edit text.</strong> Replace a line of existing text, or add new text boxes anywhere.</li>
+              <li><strong>Sign.</strong> Draw or type a signature and place it on the page.</li>
+              <li><strong>Mark up.</strong> Highlight passages and draw freehand.</li>
+              <li><strong>Redact.</strong> Permanently remove sensitive areas from the downloaded file.</li>
+              <li><strong>Add images.</strong> Place a PNG or JPEG, such as a logo or a stamp.</li>
+              <li><strong>Organize pages.</strong> Merge PDFs, add blank pages, rotate, reorder, duplicate and delete.</li>
+            </ul>
+          </section>
+
+          <section aria-labelledby="privacy-title">
+            <h2 id="privacy-title">How your files are handled</h2>
+            <p>
+              The page is rendered with PDF.js and the new file is written with pdf-lib, both
+              running in this browser tab. Your PDF is read into memory, your edits are kept as a
+              list, and a new PDF is built when you download. The original file is never modified.
+            </p>
+            <p>
+              Documents are held only in this tab. Closing or refreshing it discards them, so
+              download your work first.
+            </p>
+          </section>
+        </div>
+
+        <section class="faq" aria-labelledby="faq-title">
+          <h2 id="faq-title">Questions</h2>
+          <dl>
+            <dt>Are my PDF files uploaded to a server?</dt>
+            <dd>No. The editor opens, edits and saves PDFs entirely in your browser. Documents are never sent to a server, and the original file on your device is not changed.</dd>
+            <dt>Is the PDF editor free?</dt>
+            <dd>Yes. There is no account, no watermark and no paid tier.</dd>
+            <dt>Can I edit the existing text in a PDF?</dt>
+            <dd>Yes, for horizontal, selectable text. The replacement uses a standard PDF font on a white background, so it will not match the original font exactly, and the edited page is flattened to an image with searchable replacement text.</dd>
+            <dt>Does redaction really remove the text?</dt>
+            <dd>Yes. A redacted page is rebuilt from sanitized pixels, so the original text, images and hidden annotation text on that page are not copied into the downloaded file.</dd>
+            <dt>What are the limits?</dt>
+            <dd>Up to 50 MB per PDF, 100 MB in total and 200 pages. OCR, password-protected PDFs, form-field editing and certificate-based digital signatures are not supported.</dd>
+          </dl>
+        </section>
+
+        <footer class="site-footer">
+          <p>
+            Open source on <a href="https://github.com/firstprayer/pdf-editor">GitHub</a>. This site
+            uses Google Analytics to count visits and which tools are used. File names and document
+            contents are never sent.
+          </p>
+        </footer>
+      </div>
+    </section>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

@@ -1,94 +1,114 @@
 import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
 
+// A realistic two-page agreement for trying the editor. Every name and figure
+// is fictional and the footer says so.
 export async function createSamplePdf() {
   const document = await PDFDocument.create();
+  document.setTitle("Sample project agreement");
   const regular = await document.embedFont(StandardFonts.Helvetica);
   const bold = await document.embedFont(StandardFonts.HelveticaBold);
   const serif = await document.embedFont(StandardFonts.TimesRoman);
-  const ink = rgb(0.15, 0.18, 0.22);
-  const muted = rgb(0.4, 0.43, 0.47);
-  const accent = rgb(0.65, 0.24, 0.18);
+  const ink = rgb(0.13, 0.15, 0.2);
+  const muted = rgb(0.4, 0.43, 0.48);
   const page = document.addPage([595, 842]);
-  const text = (value, x, y, size = 11, font = regular, color = ink) => {
+  const text = (value, x, y, size = 10.5, font = regular, color = ink) => {
     page.drawText(value, { x, y, size, font, color });
   };
-  const line = (y) =>
-    page.drawLine({
-      start: { x: 54, y },
-      end: { x: 541, y },
-      color: rgb(0.83, 0.84, 0.85),
-      thickness: 0.6,
-    });
-  text("Sample Studio", 54, 778, 13, bold);
-  text("EXAMPLE DOCUMENT", 420, 778, 8, regular, muted);
-  line(756);
-  text("A good project starts", 54, 702, 32, serif);
-  text("with a little clarity.", 54, 663, 32, serif);
-  text("Project agreement", 54, 614, 11, bold, accent);
-  text("Prepared for", 54, 574, 9, regular, muted);
-  text("Your next project", 54, 555, 12, bold);
-  text("Reference", 352, 574, 9, regular, muted);
-  text("SAMPLE-001", 352, 555, 12);
-  line(530);
-  text("1. The work", 54, 498, 12, bold);
-  text("A thoughtful plan, clear communication, and a finished result.", 54, 476);
-  text("Use this sample to try editing a line, adding a note, or signing below.", 54, 458);
-  text("2. The details", 54, 414, 12, bold);
+  const line = (y, color = rgb(0.83, 0.84, 0.86)) =>
+    page.drawLine({ start: { x: 54, y }, end: { x: 541, y }, color, thickness: 0.6 });
+
+  text("Halden & Ruiz Studio", 54, 778, 12, bold);
+  text("Agreement HR-2026-014", 432, 778, 9, regular, muted);
+  line(760);
+  text("Project agreement", 54, 712, 28, serif);
+  text("Website redesign for Marlow Bakery Ltd.", 54, 688, 11, regular, muted);
+
+  text("Client", 54, 648, 8.5, regular, muted);
+  text("Marlow Bakery Ltd.", 54, 632, 11, bold);
+  text("Project", 232, 648, 8.5, regular, muted);
+  text("Website redesign", 232, 632, 11, bold);
+  text("Date", 410, 648, 8.5, regular, muted);
+  text("4 November 2026", 410, 632, 11);
+  line(610);
+
+  text("1. Scope", 54, 584, 11, bold);
+  text("Redesign of the five-page marketing site, including copy edits and responsive", 54, 564);
+  text("layouts for phone and desktop. Hosting and domain renewal are not included.", 54, 549);
+
+  text("2. Fees", 54, 512, 11, bold);
   const rows = [
-    ["Planning and preparation", "$450.00"],
-    ["Design and delivery", "$1,250.00"],
-    ["Final review", "$300.00"],
+    ["Discovery and content audit", "$450.00"],
+    ["Design and build", "$1,250.00"],
+    ["Launch support (two weeks)", "$300.00"],
   ];
   rows.forEach(([label, amount], index) => {
-    text(label, 54, 382 - index * 32);
-    text(amount, 467, 382 - index * 32);
+    const y = 488 - index * 26;
+    text(label, 54, y);
+    text(amount, 541 - regular.widthOfTextAtSize(amount, 10.5), y);
   });
-  line(296);
-  text("Project total", 54, 274, 12, bold);
-  text("$2,000.00", 465, 274, 12, bold);
-  text("3. Let's make it official", 54, 228, 12, bold);
-  text("Add your signature and date in the spaces below.", 54, 207, 10, regular, muted);
+  line(416);
+  text("Total", 54, 398, 11, bold);
+  text("$2,000.00", 541 - bold.widthOfTextAtSize("$2,000.00", 11), 398, 11, bold);
+
+  text("3. Payment", 54, 360, 11, bold);
+  text("50% on signing and 50% on launch. Invoices are due within 14 days.", 54, 340);
+
+  text("4. Acceptance", 54, 302, 11, bold);
+  text("Sign and date below to accept this agreement.", 54, 282, 10.5, regular, muted);
   page.drawLine({
-    start: { x: 54, y: 135 },
-    end: { x: 310, y: 135 },
+    start: { x: 54, y: 214 },
+    end: { x: 310, y: 214 },
     color: muted,
     thickness: 0.6,
   });
   page.drawLine({
-    start: { x: 365, y: 135 },
-    end: { x: 541, y: 135 },
+    start: { x: 365, y: 214 },
+    end: { x: 541, y: 214 },
     color: muted,
     thickness: 0.6,
   });
-  text("Signature", 54, 117, 9, regular, muted);
-  text("Date", 365, 117, 9, regular, muted);
+  text("Client signature", 54, 198, 8.5, regular, muted);
+  text("Date", 365, 198, 8.5, regular, muted);
+
   line(75);
-  text(
-    "Sample document for trying PDF Workspace. All details are illustrative.",
-    54,
-    54,
-    8,
-    regular,
-    muted,
-  );
-  text("1 / 2", 516, 54, 8, regular, muted);
+  text("Sample document. All names and figures are fictional.", 54, 58, 8, regular, muted);
+  text("1 / 2", 518, 58, 8, regular, muted);
 
   const second = document.addPage([595, 842]);
-  const add = (value, x, y, size = 11, font = regular) =>
-    second.drawText(value, { x, y, size, font, color: ink });
-  add("Room for the details.", 54, 742, 30, serif);
-  add("Project notes", 54, 695, 12, bold);
-  add("Every good agreement leaves space for questions and a clear next step.", 54, 670);
-  for (let y = 620; y >= 200; y -= 38) {
+  const add = (value, x, y, size = 10.5, font = regular, color = ink) =>
+    second.drawText(value, { x, y, size, font, color });
+  add("Halden & Ruiz Studio", 54, 778, 12, bold);
+  add("Agreement HR-2026-014", 432, 778, 9, regular, muted);
+  second.drawLine({
+    start: { x: 54, y: 760 },
+    end: { x: 541, y: 760 },
+    color: rgb(0.83, 0.84, 0.86),
+    thickness: 0.6,
+  });
+  add("Project notes", 54, 712, 24, serif);
+  add("Kick-off call, 28 October 2026", 54, 688, 11, regular, muted);
+  const notes = [
+    "Keep the current logo; refresh the colour palette.",
+    "Menu page must be easy to update without a developer.",
+    "Online ordering is out of scope for this phase.",
+  ];
+  notes.forEach((note, index) => add(`–  ${note}`, 54, 650 - index * 22));
+  for (let y = 560; y >= 200; y -= 36) {
     second.drawLine({
       start: { x: 54, y },
       end: { x: 541, y },
-      color: rgb(0.87, 0.88, 0.89),
+      color: rgb(0.88, 0.89, 0.9),
       thickness: 0.5,
     });
   }
-  add("Try adding a note, highlighting a line, or drawing on this page.", 54, 145, 10);
-  add("Sample document for trying PDF Workspace.", 54, 54, 8);
-  add("2 / 2", 516, 54, 8);
+  add("Next review: 11 November 2026", 54, 150, 10.5, bold);
+  second.drawLine({
+    start: { x: 54, y: 75 },
+    end: { x: 541, y: 75 },
+    color: rgb(0.83, 0.84, 0.86),
+    thickness: 0.6,
+  });
+  add("Sample document. All names and figures are fictional.", 54, 58, 8, regular, muted);
+  add("2 / 2", 518, 58, 8, regular, muted);
   return document.save();
 }

@@ -49,6 +49,7 @@ import {
 import { exportPdf, inspectPdf, renderRedactedPage, validateText } from "./pdf.js";
 import { browserCanvas, canvasPng, openRenderer, readImage } from "./rendering.js";
 import { createSamplePdf } from "./sample.js";
+import { track } from "./analytics.js";
 
 const tools = [
   {
@@ -147,7 +148,7 @@ export function App() {
   const [tool, setTool] = useState("select");
   const [fileName, setFileName] = useState("sample-agreement.pdf");
   const [sample, setSample] = useState(true);
-  const [busy, setBusy] = useState("Preparing your workspace…");
+  const [busy, setBusy] = useState("Loading…");
   const [error, setError] = useState("");
   const [status, setStatus] = useState("");
   const [dirty, setDirty] = useState(false);
@@ -389,8 +390,10 @@ export function App() {
           ? `${nextPages.length} ${nextPages.length === 1 ? "page added" : "pages added"}.`
           : "",
       );
+      track(append ? "pdf_insert" : "pdf_open", { files: files.length, pages: nextPages.length });
     } catch (problem) {
       createdSources.forEach(({ source }) => source.pdf.loadingTask.destroy().catch(() => {}));
+      track("pdf_open_failed");
       setProblem(
         problem.message || "The PDF could not be opened. Your current document is unchanged.",
       );
@@ -443,6 +446,7 @@ export function App() {
   }
 
   function chooseTool(id) {
+    track("tool_select", { tool: id });
     if (id === "signature") {
       setSignatureOpen(true);
       return;
@@ -483,7 +487,13 @@ export function App() {
       window.setTimeout(() => URL.revokeObjectURL(url), 60000);
       setDirty(false);
       setStatus("Download started. Your changes are still here.");
+      track("pdf_download", {
+        pages: pages.length,
+        edits: pages.reduce((total, page) => total + page.annotations.length, 0),
+        redacted: pages.some((page) => page.annotations.some((item) => item.type === "redact")),
+      });
     } catch (problem) {
+      track("pdf_download_failed");
       setProblem(
         problem.message || "The download could not be prepared. Your changes are still here.",
       );
@@ -578,12 +588,12 @@ export function App() {
         Skip to document
       </a>
       <header className="app-header">
-        <a className="wordmark" href="#document" aria-label="PDF Workspace">
+        <a className="wordmark" href="#document" aria-label="PDF Editor">
           <span className="wordmark-icon">
-            <FileText size={22} strokeWidth={1.7} />
+            <FileText size={18} strokeWidth={2} />
           </span>
           <span>
-            PDF<span className="wordmark-light">Workspace</span>
+            PDF<span className="wordmark-light">Editor</span>
           </span>
         </a>
         <div className="file-identity">
@@ -597,12 +607,12 @@ export function App() {
             maxLength={160}
             onChange={(event) => setFileName(event.target.value)}
           />
-          <span className="document-status">{dirty ? "Unsaved edits" : "Ready to edit"}</span>
+          {dirty && <span className="document-status">Not downloaded yet</span>}
         </div>
         <div className="header-actions">
           <span className="privacy-label">
             <LockKeyhole size={14} />
-            On your device
+            Files never leave this device
           </span>
           <button
             type="button"
@@ -673,21 +683,6 @@ export function App() {
         </IconButton>
       </div>
 
-      <div className="workspace-heading">
-        <div>
-          <span className="document-title">A little less paperwork.</span>
-          <span className="workspace-description">Everything you need, right on the page.</span>
-        </div>
-        <button
-          type="button"
-          className="text-button"
-          disabled={!!busy}
-          onClick={() => mergeInput.current.click()}
-        >
-          <Plus size={16} />
-          Add PDF pages
-        </button>
-      </div>
       {(error || status) && (
         <div className={`message-bar ${error ? "is-error" : ""}`} role={error ? "alert" : "status"}>
           <span>{error || status}</span>
@@ -703,7 +698,6 @@ export function App() {
         </div>
       )}
 
-      <h1 className="visually-hidden">PDF Workspace</h1>
       <main id="document" className="workspace" inert={Boolean(busy)}>
         <aside className={`page-rail ${showPages ? "is-open" : ""}`} aria-label="Document pages">
           <div className="panel-heading">
@@ -730,14 +724,6 @@ export function App() {
                 onSelect={() => changePage(page.id)}
               />
             ))}
-          </div>
-          <div className="rail-footer">
-            <ShieldCheck size={15} />
-            <p>
-              Your original file
-              <br />
-              stays unchanged.
-            </p>
           </div>
         </aside>
 
@@ -794,10 +780,9 @@ export function App() {
           <div ref={stageRef} className="document-stage" aria-busy={!!busy}>
             <div className="paper-surround">
               {sample && (
-                <div className="sample-caption">
-                  <span>Sample document</span>
-                  <span>Try a tool or open your own PDF</span>
-                </div>
+                <p className="sample-caption">
+                  Sample document. Open a PDF to replace it with your own.
+                </p>
               )}
               {activePage && sources[activePage.sourceId] ? (
                 <DocumentPage
@@ -827,16 +812,20 @@ export function App() {
               ) : (
                 <div className="workspace-empty">
                   <FileText size={36} />
-                  <h2>{busy ? "Getting your page ready…" : "A fresh page starts here."}</h2>
-                  <p>{busy || "Open a PDF to start editing. Your file stays on this device."}</p>
-                  <button
-                    type="button"
-                    className="button button-primary"
-                    onClick={() => openInput.current.click()}
-                  >
-                    <FolderOpen size={17} />
-                    Open PDF
-                  </button>
+                  <h2>{busy || "No document open"}</h2>
+                  {!busy && (
+                    <>
+                      <p>Open a PDF or drop one anywhere on this window.</p>
+                      <button
+                        type="button"
+                        className="button button-primary"
+                        onClick={() => openInput.current.click()}
+                      >
+                        <FolderOpen size={17} />
+                        Open PDF
+                      </button>
+                    </>
+                  )}
                 </div>
               )}
             </div>
@@ -854,7 +843,7 @@ export function App() {
 
         <aside className="inspector" aria-label="Editing properties">
           <div className="panel-heading">
-            <h2>{selected ? "Your selection" : "Make it yours"}</h2>
+            <h2>{selected ? "Selection" : "Properties"}</h2>
             {selected && (
               <IconButton label="Deselect edit" onClick={() => setSelectedId(null)}>
                 <X size={16} />
@@ -1003,17 +992,16 @@ export function App() {
                   </button>
                 </div>
                 <p className="helper">
-                  Drag the selection on your page to move it. Undo is always one click away.
+                  Drag it on the page, or use the arrow keys. Hold Shift to move further.
                 </p>
               </>
             ) : (
               <>
                 <div className="tool-introduction">
-                  <activeTool.icon size={26} strokeWidth={1.5} />
-                  <h3>{tool === "select" ? "Small edits. Big difference." : activeTool.label}</h3>
+                  <h3>{activeTool.label}</h3>
                   <p>
                     {tool === "select"
-                      ? "Add a thought, sign the dotted line, or give your pages a little order."
+                      ? "Click an edit on the page to change it, or choose a tool above."
                       : activeTool.hint}
                   </p>
                 </div>
@@ -1091,20 +1079,20 @@ export function App() {
                   </label>
                 )}
                 <div className="quick-start">
-                  <h3>A good place to start</h3>
+                  <h3>Common tasks</h3>
                   <button type="button" onClick={() => chooseTool("text")}>
                     <Type size={17} />
-                    <span>Add a note</span>
+                    <span>Add text</span>
                     <kbd>T</kbd>
                   </button>
                   <button type="button" onClick={() => setSignatureOpen(true)}>
                     <Signature size={17} />
-                    <span>Add your signature</span>
+                    <span>Sign</span>
                     <kbd>S</kbd>
                   </button>
                   <button type="button" onClick={() => chooseTool("highlight")}>
                     <Highlighter size={17} />
-                    <span>Mark what matters</span>
+                    <span>Highlight</span>
                     <kbd>H</kbd>
                   </button>
                 </div>
@@ -1122,12 +1110,7 @@ export function App() {
                     : "Editing original text uses standard fonts and a white background. Affected pages are flattened; other original text on them becomes an image."}
                 </p>
               </div>
-            ) : (
-              <div className="explanation">
-                <LockKeyhole size={17} />
-                <p>Your files stay in this tab. No uploads, accounts, or watermarks.</p>
-              </div>
-            )}
+            ) : null}
 
             <div className="page-actions">
               <h3>Page {activeIndex + 1 || 1}</h3>
@@ -1169,6 +1152,16 @@ export function App() {
                   Move down
                 </button>
               </div>
+              <div className="page-action-row">
+                <button type="button" disabled={!!busy} onClick={addBlankPage}>
+                  <FilePlus2 size={17} />
+                  Blank page
+                </button>
+                <button type="button" disabled={!!busy} onClick={() => mergeInput.current.click()}>
+                  <Plus size={17} />
+                  Insert PDF
+                </button>
+              </div>
               <button
                 type="button"
                 className="delete-page"
@@ -1180,20 +1173,9 @@ export function App() {
               </button>
             </div>
           </div>
-          <div className="inspector-footer">
-            <span>Made for getting things done.</span>
-            <span>PDF Workspace</span>
-          </div>
         </aside>
       </main>
 
-      <footer className="app-footer">
-        <span>
-          <LockKeyhole size={13} />
-          Private by design. Processed in your browser.
-        </span>
-        <span>Open. Edit. Make it yours.</span>
-      </footer>
       <input
         ref={openInput}
         className="visually-hidden"
@@ -1264,7 +1246,7 @@ export function App() {
           }}
         >
           <div className="dialog-head">
-            <h2 id="help-title">A few handy shortcuts.</h2>
+            <h2 id="help-title">Keyboard shortcuts</h2>
             <IconButton label="Close help" onClick={() => setHelpOpen(false)}>
               <X size={19} />
             </IconButton>

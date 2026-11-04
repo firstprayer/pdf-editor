@@ -66,7 +66,7 @@ test("real PDF round trip merges, reorders, duplicates, rotates, and retains ori
   assert.equal(document.getPageCount(), 4);
   assert.equal(document.getPages()[1].getRotation().angle, 90);
   assert.match(await textOn(output, 1), /Imported appendix/);
-  assert.match(await textOn(output, 2), /Room for the details/);
+  assert.match(await textOn(output, 2), /Project notes/);
   assert.match(await textOn(output, 3), /Approved for review.*Second line/);
   assert.match(await textOn(output, 4), /Project agreement/);
 });
@@ -168,7 +168,7 @@ test("editing original text removes the old text and writes a searchable replace
   const source = await readPdf(bytes);
   const sourcePage = await source.getPage(1);
   const item = (await sourcePage.getTextContent()).items.find(
-    (entry) => entry.str === "Your next project",
+    (entry) => entry.str === "Website redesign",
   );
   const size = Math.hypot(item.transform[2], item.transform[3]);
   const replacement = {

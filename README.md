@@ -2,10 +2,9 @@
 
 **Live site: https://firstprayer.github.io/pdf-editor/**
 
-A standalone, browser-local PDF editor (the app is titled "PDF Workspace").
+A standalone, browser-local PDF editor.
 Open the included sample or a PDF from your device, make changes, and download
-a new PDF. No account, document-upload service, analytics, or external runtime
-CDN is required.
+a new PDF. Documents are never uploaded, and there is no account or watermark.
 
 ## Run locally
 
@@ -29,6 +28,23 @@ Every push to `main` runs `.github/workflows/deploy.yml`: lint, format check,
 tests, then `npm run build` with `BASE_PATH=/pdf-editor/`, and publishes `dist/`
 to GitHub Pages. The site is fully static; documents never leave the browser.
 To build for another host path, set `BASE_PATH` (default `/`).
+
+## Analytics and SEO
+
+The production build loads Google Analytics 4 only on
+`firstprayer.github.io/pdf-editor/`, and only when `.env.production` sets
+`VITE_GA_MEASUREMENT_ID`. `src/analytics.js` drops query strings and fragments,
+keeps referrers to their origin, disables Google signals and ad personalization,
+and allows only counts and tool names as event parameters (`pdf_open`,
+`pdf_insert`, `tool_select`, `pdf_download` and the matching failure events).
+File names, document text, signatures and images are never sent. Local
+development never loads analytics.
+
+`index.html` carries the title, description, canonical URL, Open Graph and
+Twitter cards (`public/og-image.png`), WebApplication and FAQPage structured
+data, and a static, crawlable description of the editor below the app.
+`public/sitemap.xml` lists the page for Search Console. To refresh the share
+image, capture the running app at 1200×630.
 
 ## Editing
 

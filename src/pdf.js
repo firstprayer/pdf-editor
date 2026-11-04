@@ -43,8 +43,8 @@ export function validateText(text) {
 export async function exportPdf({ sources, pages, renderFlattenedPage }) {
   if (!pages.length || pages.length > MAX_PAGES) throw new Error("Keep 1 to 200 pages.");
   const output = await PDFDocument.create();
-  output.setProducer("PDF Workspace");
-  output.setCreator("PDF Workspace");
+  output.setProducer("PDF Editor");
+  output.setCreator("PDF Editor");
   const loaded = new Map();
   const embeddedImages = new Map();
   async function embedImage(dataUrl) {
