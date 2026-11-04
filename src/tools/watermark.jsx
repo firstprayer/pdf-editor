@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Check, Download } from "lucide-react";
 import { addWatermark, checkPdfFiles, watermarkCentres } from "./ops.js";
-import { baseName, downloadBytes, plural, preparePdf, samplePack } from "./browser.js";
+import { baseName, downloadBytes, plural, preparePdf } from "./browser.js";
 import { mountTool, PagePreview, Segmented, textWidth, ToolShell, useMessages } from "./ui.jsx";
 import { DOCUMENT_COLORS } from "../model.js";
 import { track } from "../analytics.js";
@@ -96,7 +96,6 @@ function WatermarkTool() {
         title: "Choose the PDF to watermark",
         body: "Drop a PDF here, or choose one from your device. It stays on this device.",
         pickLabel: "Choose PDF",
-        onSample: async () => open([await samplePack()]),
       }}
       primary={{
         label: "Add watermark and download",

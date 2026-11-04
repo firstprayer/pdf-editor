@@ -199,7 +199,7 @@ export function ToolShell({
   );
 }
 
-function DropZone({ title, body, pickLabel, onPick, onSample, sampleLabel, busy }) {
+function DropZone({ title, body, pickLabel, onPick, busy }) {
   return (
     <div className="drop-zone">
       <div className="drop-sheet" aria-hidden="true">
@@ -212,16 +212,6 @@ function DropZone({ title, body, pickLabel, onPick, onSample, sampleLabel, busy 
           <FilePlus2 size={17} />
           <span>{pickLabel}</span>
         </button>
-        {onSample && (
-          <button
-            type="button"
-            className="button button-quiet"
-            disabled={!!busy}
-            onClick={onSample}
-          >
-            {sampleLabel ?? "Try a sample"}
-          </button>
-        )}
       </div>
     </div>
   );

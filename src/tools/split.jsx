@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { Download } from "lucide-react";
 import { checkPdfFiles, parseRanges, splitPdf } from "./ops.js";
-import { baseName, downloadFiles, plural, preparePdf, samplePack } from "./browser.js";
+import { baseName, downloadFiles, plural, preparePdf } from "./browser.js";
 import { mountTool, Sheet, ToolShell, useMessages, useUnsaved } from "./ui.jsx";
 import { track } from "../analytics.js";
 
@@ -125,7 +125,6 @@ function SplitTool() {
         title: "Choose the PDF to split",
         body: "Drop a PDF here, or choose one from your device. It stays on this device.",
         pickLabel: "Choose PDF",
-        onSample: async () => open([await samplePack()]),
       }}
       primary={{
         label: "Split and download",

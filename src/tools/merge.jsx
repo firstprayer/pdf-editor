@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Download, Trash2 } from "lucide-react";
 import { checkPdfFiles, MAX_FILES, mergePdfs } from "./ops.js";
-import { baseName, downloadBytes, formatBytes, plural, preparePdf, samplePdfs } from "./browser.js";
+import { baseName, downloadBytes, formatBytes, plural, preparePdf } from "./browser.js";
 import {
   IconButton,
   mountTool,
@@ -82,8 +82,6 @@ function MergeTool() {
         title: "Choose the PDFs to merge",
         body: `Drop up to ${MAX_FILES} PDF files here, or choose them from your device. They stay on this device.`,
         pickLabel: "Choose PDFs",
-        onSample: async () => add(await samplePdfs()),
-        sampleLabel: "Try two sample PDFs",
       }}
       primary={{
         label: "Merge and download",

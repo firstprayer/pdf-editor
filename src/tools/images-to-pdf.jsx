@@ -8,10 +8,7 @@ import {
   imageForPdf,
   isImageFile,
   MAX_IMAGE_BYTES,
-  openPdf,
   plural,
-  renderPageImage,
-  samplePack,
 } from "./browser.js";
 import {
   IconButton,
@@ -57,9 +54,9 @@ function ImagesToPdfTool() {
 
   async function add(inputs) {
     clear();
-    const files = inputs.filter((file) => isImageFile(file) || file.bytes);
+    const files = inputs.filter((file) => isImageFile(file));
     if (!files.length) return fail(new Error("Choose JPG, PNG or WebP images."));
-    if (files.some((file) => (file.size ?? file.bytes.length) > MAX_IMAGE_BYTES)) {
+    if (files.some((file) => file.size > MAX_IMAGE_BYTES)) {
       return fail(new Error("Choose images smaller than 30 MB each."));
     }
     if (images.length + files.length > 200) return fail(new Error("Add up to 200 images."));
@@ -77,7 +74,7 @@ function ImagesToPdfTool() {
           ...image,
           key: `i${imageKey}`,
           name: file.name,
-          size: file.size ?? file.bytes.length,
+          size: file.size,
           url,
         });
       }
@@ -88,24 +85,6 @@ function ImagesToPdfTool() {
     } catch (error) {
       fail(error);
     } finally {
-      setBusy("");
-    }
-  }
-
-  async function sample() {
-    setBusy("Preparing sample images…");
-    try {
-      const pack = await samplePack();
-      const pdf = await openPdf(pack.bytes);
-      const files = [];
-      for (let index = 0; index < pdf.numPages; index += 1) {
-        const image = await renderPageImage(pdf, index, { dpi: 110 });
-        files.push({ name: `scan-${index + 1}.jpg`, type: "image/jpeg", bytes: image.bytes });
-      }
-      await pdf.loadingTask.destroy();
-      await add(files);
-    } catch (error) {
-      fail(error);
       setBusy("");
     }
   }
@@ -144,8 +123,6 @@ function ImagesToPdfTool() {
         title: "Choose the images to convert",
         body: "Drop JPG, PNG or WebP images here, or choose them from your device. They stay on this device.",
         pickLabel: "Choose images",
-        onSample: sample,
-        sampleLabel: "Try sample scans",
       }}
       primary={{
         label: "Convert and download",

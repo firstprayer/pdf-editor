@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Download, RotateCcw, RotateCw, Undo2 } from "lucide-react";
 import { assemblePages, checkPdfFiles } from "./ops.js";
-import { baseName, downloadBytes, plural, preparePdf, samplePack } from "./browser.js";
+import { baseName, downloadBytes, plural, preparePdf } from "./browser.js";
 import { IconButton, mountTool, Sheet, ToolShell, useMessages, useUnsaved } from "./ui.jsx";
 import { track } from "../analytics.js";
 
@@ -72,7 +72,6 @@ function RotateTool() {
         title: "Choose the PDF to rotate",
         body: "Drop a PDF here, or choose one from your device. It stays on this device.",
         pickLabel: "Choose PDF",
-        onSample: async () => open([await samplePack()]),
       }}
       primary={{
         label: "Rotate and download",

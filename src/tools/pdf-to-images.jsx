@@ -8,7 +8,6 @@ import {
   plural,
   preparePdf,
   renderPageImage,
-  samplePack,
 } from "./browser.js";
 import { mountTool, Segmented, Sheet, ToolShell, useMessages } from "./ui.jsx";
 import { track } from "../analytics.js";
@@ -107,7 +106,6 @@ function PdfToImagesTool() {
         title: "Choose the PDF to convert",
         body: "Drop a PDF here, or choose one from your device. Pages are turned into images in this tab.",
         pickLabel: "Choose PDF",
-        onSample: async () => open([await samplePack()]),
       }}
       primary={{
         label: "Convert and download",

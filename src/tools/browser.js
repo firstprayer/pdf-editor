@@ -2,8 +2,7 @@
 // encoding images and handing results back to the user as downloads.
 import { zipSync } from "fflate";
 import { openRenderer } from "../rendering.js";
-import { createSampleInvoice, createSamplePdf } from "../sample.js";
-import { loadPdf, mergePdfs } from "./ops.js";
+import { loadPdf } from "./ops.js";
 
 export async function readBytes(file) {
   return new Uint8Array(await file.arrayBuffer());
@@ -139,7 +138,7 @@ export function isImageFile(file) {
 
 /** Prepares an image file for embedding: JPEG and PNG pass through, others become PNG. */
 export async function imageForPdf(file) {
-  const bytes = file.bytes ?? (await readBytes(file));
+  const bytes = await readBytes(file);
   let bitmap;
   try {
     bitmap = await createImageBitmap(new Blob([bytes], { type: file.type || "image/*" }));
@@ -200,7 +199,9 @@ let nextId = 0;
 
 /** Validates a PDF and opens it for previews. Accepts a File or {name, bytes}. */
 export async function preparePdf(input) {
-  const bytes = input.bytes ?? (await readBytes(input));
+  // Blob.prototype.bytes() exists in modern browsers, so test for a Blob, not a
+  // .bytes property.
+  const bytes = input instanceof Blob ? await readBytes(input) : input.bytes;
   const document = await loadPdf(bytes);
   const pdf = await openPdf(bytes);
   nextId += 1;
@@ -212,17 +213,4 @@ export async function preparePdf(input) {
     pdf,
     pageCount: document.getPageCount(),
   };
-}
-
-export async function samplePdfs() {
-  return [
-    { name: "project-agreement.pdf", bytes: await createSamplePdf() },
-    { name: "invoice.pdf", bytes: await createSampleInvoice() },
-  ];
-}
-
-/** A three-page sample: the agreement followed by the invoice. */
-export async function samplePack() {
-  const [agreement, invoice] = await samplePdfs();
-  return { name: "sample-documents.pdf", bytes: await mergePdfs([agreement.bytes, invoice.bytes]) };
 }

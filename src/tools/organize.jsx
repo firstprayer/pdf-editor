@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Copy, Download, RotateCw, Trash2, Undo2 } from "lucide-react";
 import { assemblePages, checkPdfFiles } from "./ops.js";
-import { baseName, downloadBytes, formatBytes, plural, preparePdf, samplePack } from "./browser.js";
+import { baseName, downloadBytes, formatBytes, plural, preparePdf } from "./browser.js";
 import {
   IconButton,
   mountTool,
@@ -95,7 +95,6 @@ function OrganizeTool() {
         title: "Choose the PDF to organize",
         body: "Drop one or more PDFs here, or choose them from your device. They stay on this device.",
         pickLabel: "Choose PDF",
-        onSample: async () => add([await samplePack()]),
       }}
       primary={{
         label: "Save and download",

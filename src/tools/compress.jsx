@@ -31,60 +31,6 @@ const LEVELS = [
   },
 ];
 
-// A sample with a large, lightly compressed photo-like image, so every level
-// has something to work on.
-async function photoSample() {
-  const { PDFDocument, StandardFonts, rgb } = await import("pdf-lib");
-  const canvas = document.createElement("canvas");
-  canvas.width = 2400;
-  canvas.height = 1600;
-  const context = canvas.getContext("2d");
-  const sky = context.createLinearGradient(0, 0, 0, 1600);
-  sky.addColorStop(0, "#b9cbe0");
-  sky.addColorStop(0.55, "#e8d9c4");
-  sky.addColorStop(1, "#7a5c45");
-  context.fillStyle = sky;
-  context.fillRect(0, 0, 2400, 1600);
-  for (let index = 0; index < 900; index += 1) {
-    const x = (index * 7919) % 2400;
-    const y = 700 + ((index * 104729) % 900);
-    context.fillStyle = `hsla(${20 + (index % 30)}, 35%, ${30 + (index % 40)}%, 0.35)`;
-    context.beginPath();
-    context.arc(x, y, 8 + (index % 60), 0, Math.PI * 2);
-    context.fill();
-  }
-  const noise = context.getImageData(0, 0, 2400, 1600);
-  for (let index = 0; index < noise.data.length; index += 4) {
-    const grain = ((index * 2654435761) >>> 24) / 16 - 8;
-    noise.data[index] += grain;
-    noise.data[index + 1] += grain;
-    noise.data[index + 2] += grain;
-  }
-  context.putImageData(noise, 0, 0);
-  const jpeg = await new Promise((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.95));
-  const document_ = await PDFDocument.create();
-  const page = document_.addPage([595, 842]);
-  const image = await document_.embedJpg(new Uint8Array(await jpeg.arrayBuffer()));
-  const bold = await document_.embedFont(StandardFonts.HelveticaBold);
-  const regular = await document_.embedFont(StandardFonts.Helvetica);
-  page.drawText("Marlow Bakery: shop photography", {
-    x: 54,
-    y: 778,
-    size: 16,
-    font: bold,
-    color: rgb(0.13, 0.15, 0.2),
-  });
-  page.drawText("Sample document with a large photo. All content is fictional.", {
-    x: 54,
-    y: 756,
-    size: 10,
-    font: regular,
-    color: rgb(0.4, 0.43, 0.48),
-  });
-  page.drawImage(image, { x: 54, y: 400, width: 487, height: 325 });
-  return { name: "photo-brochure.pdf", bytes: await document_.save() };
-}
-
 function CompressTool() {
   const [doc, setDoc] = useState(null);
   const [level, setLevel] = useState("recommended");
@@ -173,7 +119,6 @@ function CompressTool() {
         title: "Choose the PDF to compress",
         body: "Drop a PDF here, or choose one from your device. It is compressed in this tab and never uploaded.",
         pickLabel: "Choose PDF",
-        onSample: async () => open([await photoSample()]),
       }}
       primary={
         result

@@ -8,7 +8,7 @@ import {
   numberLabel,
   numberOrigin,
 } from "./ops.js";
-import { baseName, downloadBytes, preparePdf, samplePack, plural } from "./browser.js";
+import { baseName, downloadBytes, preparePdf, plural } from "./browser.js";
 import { mountTool, PagePreview, Segmented, textWidth, ToolShell, useMessages } from "./ui.jsx";
 import { track } from "../analytics.js";
 
@@ -134,7 +134,6 @@ function PageNumbersTool() {
         title: "Choose the PDF to number",
         body: "Drop a PDF here, or choose one from your device. It stays on this device.",
         pickLabel: "Choose PDF",
-        onSample: async () => open([await samplePack()]),
       }}
       primary={{
         label: "Add numbers and download",
