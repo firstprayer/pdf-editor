@@ -112,3 +112,58 @@ export async function createSamplePdf() {
   add("2 / 2", 518, 58, 8, regular, muted);
   return document.save();
 }
+
+// A one-page invoice to pair with the agreement in multi-file samples.
+export async function createSampleInvoice() {
+  const document = await PDFDocument.create();
+  document.setTitle("Sample invoice");
+  const regular = await document.embedFont(StandardFonts.Helvetica);
+  const bold = await document.embedFont(StandardFonts.HelveticaBold);
+  const serif = await document.embedFont(StandardFonts.TimesRoman);
+  const ink = rgb(0.13, 0.15, 0.2);
+  const muted = rgb(0.4, 0.43, 0.48);
+  const rule = rgb(0.83, 0.84, 0.86);
+  const page = document.addPage([595, 842]);
+  const text = (value, x, y, size = 10.5, font = regular, color = ink) =>
+    page.drawText(value, { x, y, size, font, color });
+  const right = (value, y, size = 10.5, font = regular) =>
+    text(value, 541 - font.widthOfTextAtSize(value, size), y, size, font);
+  const line = (y) =>
+    page.drawLine({ start: { x: 54, y }, end: { x: 541, y }, color: rule, thickness: 0.6 });
+
+  text("Halden & Ruiz Studio", 54, 778, 12, bold);
+  text("Invoice HR-INV-0381", 440, 778, 9, regular, muted);
+  line(760);
+  text("Invoice", 54, 712, 28, serif);
+  text("Deposit for agreement HR-2026-014", 54, 688, 11, regular, muted);
+  text("Billed to", 54, 648, 8.5, regular, muted);
+  text("Marlow Bakery Ltd.", 54, 632, 11, bold);
+  text("Issued", 232, 648, 8.5, regular, muted);
+  text("4 November 2026", 232, 632, 11);
+  text("Due", 410, 648, 8.5, regular, muted);
+  text("18 November 2026", 410, 632, 11);
+  line(610);
+  text("Description", 54, 584, 8.5, regular, muted);
+  right("Amount", 584, 8.5);
+  [
+    ["Deposit: 50% of $2,000.00", "$1,000.00"],
+    ["Sales tax (0%)", "$0.00"],
+  ].forEach(([label, amount], index) => {
+    text(label, 54, 556 - index * 26);
+    right(amount, 556 - index * 26);
+  });
+  line(486);
+  text("Amount due", 54, 466, 11, bold);
+  right("$1,000.00", 466, 11, bold);
+  text(
+    "Pay by bank transfer within 14 days and quote the invoice number.",
+    54,
+    420,
+    10.5,
+    regular,
+    muted,
+  );
+  line(75);
+  text("Sample document. All names and figures are fictional.", 54, 58, 8, regular, muted);
+  return document.save();
+}

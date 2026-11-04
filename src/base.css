@@ -8,6 +8,7 @@ a { color: var(--color-tool-ink); text-decoration-thickness: 1px; text-underline
 a:hover { color: var(--color-accent-hover); }
 h1, h2, h3 { margin: 0; font-family: var(--font-display); font-weight: var(--display-weight); letter-spacing: var(--tracking-display); line-height: 1.2; overflow-wrap: break-word; min-width: 0; text-wrap: balance; }
 p { margin: 0; text-wrap: pretty; }
+b, strong { font-weight: 650; }
 img, video { max-width: 100%; height: auto; display: block; }
 svg { display: block; }
 [hidden] { display: none !important; }

@@ -15,7 +15,6 @@ import {
   HelpCircle,
   Highlighter,
   ImagePlus,
-  LockKeyhole,
   Maximize,
   Minus,
   MousePointer2,
@@ -584,18 +583,7 @@ export function App() {
         if (!busy) importFiles(Array.from(event.dataTransfer.files));
       }}
     >
-      <a className="skip-link" href="#document">
-        Skip to document
-      </a>
-      <header className="app-header">
-        <a className="wordmark" href="#document" aria-label="PDF Editor">
-          <span className="wordmark-icon">
-            <FileText size={18} strokeWidth={2} />
-          </span>
-          <span>
-            PDF<span className="wordmark-light">Editor</span>
-          </span>
-        </a>
+      <div className="command-bar app-header">
         <div className="file-identity">
           <FileText size={16} />
           <label className="visually-hidden" htmlFor="filename">
@@ -609,11 +597,7 @@ export function App() {
           />
           {dirty && <span className="document-status">Not downloaded yet</span>}
         </div>
-        <div className="header-actions">
-          <span className="privacy-label">
-            <LockKeyhole size={14} />
-            Files never leave this device
-          </span>
+        <div className="command-actions header-actions">
           <button
             type="button"
             className="button button-quiet"
@@ -635,7 +619,7 @@ export function App() {
             <span>{busy === "Preparing your download…" ? "Preparing…" : "Download"}</span>
           </button>
         </div>
-      </header>
+      </div>
 
       <div className="editing-toolbar">
         <div className="history-controls">

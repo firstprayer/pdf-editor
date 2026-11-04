@@ -2,9 +2,37 @@
 
 **Live site: https://firstprayer.github.io/pdf-editor/**
 
-A standalone, browser-local PDF editor.
-Open the included sample or a PDF from your device, make changes, and download
-a new PDF. Documents are never uploaded, and there is no account or watermark.
+A suite of browser-local PDF tools. Every page opens a PDF (or images) from
+your device, changes it in the tab, and downloads a new file. Documents are
+never uploaded, and there is no account or watermark.
+
+| Page | Path | What it does |
+| --- | --- | --- |
+| Edit PDF | `/` | Full editor: text, signatures, markup, redaction, pages |
+| Merge PDF | `/merge-pdf/` | Join up to 20 PDFs in a chosen order |
+| Split PDF | `/split-pdf/` | Every page, page ranges, or selected pages (ZIP when several) |
+| Organize PDF | `/organize-pdf/` | Reorder, rotate, copy, delete pages; add pages from other PDFs |
+| Rotate PDF | `/rotate-pdf/` | Rotate all or single pages |
+| Compress PDF | `/compress-pdf/` | Basic (lossless), Recommended (recompress JPEG photos, keep text), Strong (pages to images) |
+| JPG to PDF | `/jpg-to-pdf/` | JPG, PNG, WebP to PDF; A4, Letter or fit-to-image; EXIF rotation respected |
+| PDF to JPG | `/pdf-to-jpg/` | Pages to JPG or PNG at 72, 150 or 300 DPI |
+| Add page numbers | `/add-page-numbers/` | Six positions, four formats, start number, skip cover |
+| Watermark PDF | `/watermark-pdf/` | Text watermark: size, angle, colour, transparency, single or tiled |
+
+## How the site is built
+
+`site/catalog.mjs` is the single source for every page: its title,
+description, structured data, how-to steps, FAQ and nav label.
+`scripts/build-pages.mjs` turns it into `index.html` and `<slug>/index.html`
+(committed, so `vite` can serve them) plus `public/sitemap.xml`; `npm run dev`
+and `npm run build` run it first, and `npm test` fails if the generated files
+are stale. Vite builds each page as its own entry.
+
+Each page has the same static site bar (an ink strip with links to every tool),
+then the app, then crawlable copy. Tool apps share `src/tools/ui.jsx` (command
+bar, drop zone, page sheets, options panel, live preview) and
+`src/tools/ops.js` (pure pdf-lib operations, tested in Node). Browser-only work
+such as rendering pages and encoding images lives in `src/tools/browser.js`.
 
 ## Run locally
 
@@ -40,13 +68,18 @@ and allows only counts and tool names as event parameters (`pdf_open`,
 File names, document text, signatures and images are never sent. Local
 development never loads analytics.
 
-`index.html` carries the title, description, canonical URL, Open Graph and
-Twitter cards (`public/og-image.png`), WebApplication and FAQPage structured
-data, and a static, crawlable description of the editor below the app.
-`public/sitemap.xml` lists the page for Search Console. To refresh the share
-image, capture the running app at 1200×630.
+Tool pages also send `tool_run` and `tool_failed` with `tool`, `pages`,
+`files` and `method`. `tool` and `method` are registered as GA4 custom
+dimensions (Tool, Tool option).
 
-## Editing
+Every page carries its own title, description, canonical URL, Open Graph and
+Twitter cards (`public/og-image.png`), WebApplication, FAQPage and (for tools)
+BreadcrumbList structured data, and a static, crawlable guide below the app.
+`public/sitemap.xml` lists every page; it is submitted in Search Console, which
+is verified with `public/google3e645556460c9e98.html` (keep that file). To
+refresh the share image, capture the running app at 1200×630.
+
+## Editor
 
 - Replace horizontal, selectable original text, or add independent text boxes.
 - Draw or type a visual signature and place PNG or JPEG images.
@@ -100,6 +133,9 @@ npm run build
 ```
 
 Tests exercise actual PDF generation and independent PDF.js parsing/rendering,
+including every tool operation (merge, ranges, split, page assembly and
+rotation, page numbers on rotated pages, watermarks, images to PDF, photo
+recompression),
 including redaction, original-text replacement, signatures, merged page order,
 cropped/rotated geometry, and PDF user units. No test uses live documents or
 external accounts. Browser acceptance and screenshots are separate checks.

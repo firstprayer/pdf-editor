@@ -1,8 +1,5 @@
 import React from "react";
-import { createRoot } from "react-dom/client";
 import { App } from "./App.jsx";
-import "./styles.css";
-import { initAnalytics } from "./analytics.js";
+import { mountTool } from "./tools/ui.jsx";
 
-initAnalytics();
-createRoot(document.getElementById("root")).render(<App />);
+mountTool(App);
