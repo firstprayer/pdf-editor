@@ -75,6 +75,8 @@ dimensions (Tool, Tool option).
 Every page carries its own title, description, canonical URL, Open Graph and
 Twitter cards (`public/og-image.png`), WebApplication, FAQPage and (for tools)
 BreadcrumbList structured data, and a static, crawlable guide below the app.
+`/privacy/` is the privacy policy, and every footer links to it and the contact
+address. Keep it matched to `src/analytics.js`, including the GA4 retention setting.
 `public/sitemap.xml` lists every page; it is submitted in Search Console, which
 is verified with `public/google3e645556460c9e98.html` (keep that file). To
 refresh the share image, capture the running app at 1200×630.

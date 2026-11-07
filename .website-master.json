@@ -1,0 +1,65 @@
+{
+  "site": "https://firstprayer.github.io/pdf-editor/",
+  "items": {
+    "gsc-verified": {
+      "status": "done",
+      "evidence": "Search Console Settings: verified owner, file google3e645556460c9e98.html",
+      "date": "2026-11-06"
+    },
+    "gsc-clean": {
+      "status": "done",
+      "evidence": "Search Console Manual actions and Security issues: no issues detected",
+      "date": "2026-11-06"
+    },
+    "gsc-sitemap": {
+      "status": "waiting",
+      "reason": "Resubmitted 2026-11-06. Search Console still shows Couldn't fetch, although the file returns 200 as XML with 10 URLs",
+      "recheck": "2026-11-09"
+    },
+    "gsc-indexed": {
+      "status": "waiting",
+      "reason": "Home is indexed. Indexing requested for all 9 tool pages on 2026-11-06; they were unknown to Google",
+      "recheck": "2026-11-13"
+    },
+    "ga-hits": {
+      "status": "done",
+      "evidence": "Real Chrome visit to /merge-pdf/ appeared in GA4 Realtime",
+      "date": "2026-11-06"
+    },
+    "ga-events": {
+      "status": "done",
+      "evidence": "tool_run marked as a key event",
+      "date": "2026-11-06"
+    },
+    "ga-retention": {
+      "status": "done",
+      "evidence": "Event and user data both set to 14 months",
+      "date": "2026-11-06"
+    },
+    "ga-gsc-link": {
+      "status": "done",
+      "evidence": "GA4 Search Console links lists the property with stream PDF Editor web",
+      "date": "2026-11-06"
+    },
+    "own-domain": {
+      "status": "intentional",
+      "reason": "Owner chose to stay on github.io to avoid paying for a domain",
+      "date": "2026-11-07"
+    },
+    "ai-training": {
+      "status": "done",
+      "evidence": "Owner allows AI training crawlers",
+      "date": "2026-11-07"
+    },
+    "ads-decision": {
+      "status": "done",
+      "evidence": "Owner decided: no ads until the site has traffic",
+      "date": "2026-11-07"
+    },
+    "gsc-owner": {
+      "status": "done",
+      "evidence": "Main account added as Owner, confirmed from its own session",
+      "date": "2026-11-07"
+    }
+  }
+}

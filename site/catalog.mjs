@@ -383,3 +383,75 @@ export function toolUrl(tool) {
 }
 
 export const PRIVACY_NOTE = PRIVACY;
+
+export const CONTACT_EMAIL = "mle.ultimate@gmail.com";
+
+// A static page with no app. Section text is trusted HTML because it holds links.
+// Keep it matched to what the code does: see src/analytics.js before changing it.
+export const PRIVACY_PAGE = {
+  id: "privacy",
+  slug: "privacy",
+  name: "Privacy policy",
+  entry: "/src/privacy.js",
+  title: "Privacy Policy | PDF Editor",
+  description:
+    "How PDF Editor handles your data: files stay in your browser, and Google Analytics counts visits and tool use without file names or document contents.",
+  h1: "Privacy policy",
+  updated: "November 7, 2026",
+  lead: "PDF Editor runs in your browser, so your files stay on your device. This page explains the small amount of usage data the site does collect, and who handles it.",
+  sections: [
+    {
+      heading: "Your files",
+      body: [
+        "<p>Files you open are read and changed by your browser tab. They are not uploaded to any server, and this site does not store them. Closing or refreshing the tab discards them. File names, document text, images and signatures are never sent anywhere.</p>",
+      ],
+    },
+    {
+      heading: "Usage analytics",
+      body: [
+        "<p>This site uses Google Analytics 4 to count visits and see which tools are used. It records:</p>",
+        `<ul>
+              <li><strong>Pages.</strong> The page address, without any query string or fragment, and the origin of the site that sent you.</li>
+              <li><strong>Actions.</strong> Events such as opening a PDF, running a tool, downloading a result, or a step failing.</li>
+              <li><strong>Action details.</strong> The tool name, the option chosen, counts of pages, files and edits, and whether a download included a redaction.</li>
+              <li><strong>Device details.</strong> Google Analytics uses the connection and browser details it receives to estimate your approximate location and device type.</li>
+            </ul>`,
+        "<p>Google signals and ad personalization are turned off. This site shows no ads and does not sell data.</p>",
+      ],
+    },
+    {
+      heading: "Cookies",
+      body: [
+        "<p>The site's own code sets no cookies and stores nothing in your browser. Google Analytics sets its own cookies, such as <code>_ga</code>, to recognize a returning browser and count visits.</p>",
+        '<p>You can block them with your browser settings, a content blocker or Google\'s <a href="https://tools.google.com/dlpage/gaoptout">opt-out add-on</a>. Every tool keeps working if you do.</p>',
+      ],
+    },
+    {
+      heading: "Who else handles data",
+      body: [
+        `<ul>
+              <li><strong>Google</strong> provides Google Analytics and may process data outside your country. See the <a href="https://policies.google.com/privacy">Google Privacy Policy</a>.</li>
+              <li><strong>GitHub</strong> hosts this site on GitHub Pages and may log visitor IP addresses for security. See the <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement">GitHub Privacy Statement</a>.</li>
+            </ul>`,
+      ],
+    },
+    {
+      heading: "How long data is kept",
+      body: [
+        "<p>Analytics event and user data is kept for 14 months, then deleted. Aggregated reports can remain after that.</p>",
+      ],
+    },
+    {
+      heading: "Your rights",
+      body: [
+        "<p>Depending on where you live, you may have rights to access, correct or delete personal data, or to object to its use. This site has no accounts and holds no names, so it usually cannot link analytics to you, but write to us and we will help where we can.</p>",
+      ],
+    },
+    {
+      heading: "Contact",
+      body: [
+        `<p>Send questions or requests to <a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a>. If this policy changes, the date at the top of this page changes too.</p>`,
+      ],
+    },
+  ],
+};

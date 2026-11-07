@@ -178,6 +178,11 @@ dialog::backdrop { background: var(--color-backdrop); }
 .faq dt:first-of-type, .faq dd:first-of-type { border-top: 0; }
 .site-footer { margin-top: var(--space-2xl); padding-top: var(--space-lg); border-top: 1px solid var(--color-rule); }
 .site-footer p { font-size: var(--text-sm); color: var(--color-muted); max-width: 72ch; }
+.site-footer p + p { margin-top: var(--space-2xs); }
+.policy-updated { margin-top: var(--space-sm); font-size: var(--text-sm); color: var(--color-muted); }
+.policy { display: grid; gap: var(--space-xl); margin-top: var(--space-2xl); max-width: 72ch; }
+.policy p { line-height: 1.6; color: var(--color-ink-2); }
+.policy p + p, .policy p + ul, .policy ul + p { margin-top: var(--space-sm); }
 
 @media (max-width: 1180px) {
   .document-status { display: none; }
