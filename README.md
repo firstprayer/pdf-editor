@@ -1,23 +1,43 @@
-# PDF Editor
+# PDF Editor: free online PDF tools that run in your browser
 
-**Live site: https://firstprayer.github.io/pdf-editor/**
+**Try it: https://firstprayer.github.io/pdf-editor/**
 
-A suite of browser-local PDF tools. Every page opens a PDF (or images) from
-your device, changes it in the tab, and downloads a new file. Documents are
-never uploaded, and there is no account or watermark.
+Free PDF editor and PDF tools that work entirely in your browser. Edit, sign,
+merge, split, compress, rotate and watermark PDFs, convert JPG to PDF and PDF
+to JPG, and add page numbers. Files are processed locally on your device and
+never uploaded to a server. No account, no sign-up, no watermark, no install.
 
-| Page | Path | What it does |
-| --- | --- | --- |
-| Edit PDF | `/` | Full editor: text, signatures, markup, redaction, pages |
-| Merge PDF | `/merge-pdf/` | Join up to 20 PDFs in a chosen order |
-| Split PDF | `/split-pdf/` | Every page, page ranges, or selected pages (ZIP when several) |
-| Organize PDF | `/organize-pdf/` | Reorder, rotate, copy, delete pages; add pages from other PDFs |
-| Rotate PDF | `/rotate-pdf/` | Rotate all or single pages |
-| Compress PDF | `/compress-pdf/` | Basic (lossless), Recommended (recompress JPEG photos, keep text), Strong (pages to images) |
-| JPG to PDF | `/jpg-to-pdf/` | JPG, PNG, WebP to PDF; A4, Letter or fit-to-image; EXIF rotation respected |
-| PDF to JPG | `/pdf-to-jpg/` | Pages to JPG or PNG at 72, 150 or 300 DPI |
-| Add page numbers | `/add-page-numbers/` | Six positions, four formats, start number, skip cover |
-| Watermark PDF | `/watermark-pdf/` | Text watermark: size, angle, colour, transparency, single or tiled |
+![PDF Editor in the browser: page thumbnails, editing toolbar and properties panel](public/og-image.png)
+
+## Tools
+
+| Tool | What it does |
+| --- | --- |
+| [Edit PDF](https://firstprayer.github.io/pdf-editor/) | Full editor: edit text, add text, sign, highlight, draw, redact, insert images, manage pages |
+| [Merge PDF](https://firstprayer.github.io/pdf-editor/merge-pdf/) | Join up to 20 PDFs in a chosen order |
+| [Split PDF](https://firstprayer.github.io/pdf-editor/split-pdf/) | Every page, page ranges, or selected pages (ZIP when several) |
+| [Organize PDF](https://firstprayer.github.io/pdf-editor/organize-pdf/) | Reorder, rotate, copy, delete pages; add pages from other PDFs |
+| [Rotate PDF](https://firstprayer.github.io/pdf-editor/rotate-pdf/) | Rotate all or single pages |
+| [Compress PDF](https://firstprayer.github.io/pdf-editor/compress-pdf/) | Basic (lossless), Recommended (recompress JPEG photos, keep text), Strong (pages to images) |
+| [JPG to PDF](https://firstprayer.github.io/pdf-editor/jpg-to-pdf/) | JPG, PNG, WebP to PDF; A4, Letter or fit-to-image; EXIF rotation respected |
+| [PDF to JPG](https://firstprayer.github.io/pdf-editor/pdf-to-jpg/) | Pages to JPG or PNG at 72, 150 or 300 DPI |
+| [Add page numbers](https://firstprayer.github.io/pdf-editor/add-page-numbers/) | Six positions, four formats, start number, skip cover |
+| [Watermark PDF](https://firstprayer.github.io/pdf-editor/watermark-pdf/) | Text watermark: size, angle, colour, transparency, single or tiled |
+
+## Common questions
+
+**Is it free?** Yes. Every tool is free, with no account, no daily limit and no
+watermark on the output.
+
+**Are my files uploaded?** No. Each page opens the PDF or images from your
+device, changes them in the browser tab with JavaScript, and downloads a new
+file. Nothing is sent to a server. See the [privacy policy](https://firstprayer.github.io/pdf-editor/privacy/).
+
+**Does it work on a phone?** Yes. It runs in any modern browser on desktop or
+phone, with nothing to install.
+
+**Can I edit existing text in a PDF?** Yes, for horizontal selectable text.
+Limits are listed under [Document behavior and limits](#document-behavior-and-limits).
 
 ## How the site is built
 
