@@ -13,13 +13,13 @@
     },
     "gsc-sitemap": {
       "status": "waiting",
-      "reason": "Resubmitted 2026-11-06. Search Console still shows Couldn't fetch, although the file returns 200 as XML with 10 URLs",
-      "recheck": "2026-11-09"
+      "reason": "2026-11-14: still Couldn't fetch, never read, although the file returns 200 as XML with 11 URLs. Root robots.txt with a Sitemap line is in firstprayer.github.com PR #2",
+      "recheck": "2026-11-28"
     },
     "gsc-indexed": {
       "status": "waiting",
-      "reason": "Home is indexed. Indexing requested for all 9 tool pages on 2026-11-06; they were unknown to Google",
-      "recheck": "2026-11-13"
+      "reason": "2026-11-14: home indexed; all 9 tool pages still unknown to Google. Live test of compress-pdf: page can be indexed. Indexing re-requested for all 9",
+      "recheck": "2026-11-28"
     },
     "ga-hits": {
       "status": "done",
@@ -60,6 +60,11 @@
       "status": "done",
       "evidence": "Main account added as Owner, confirmed from its own session",
       "date": "2026-11-07"
+    },
+    "llms-txt": {
+      "status": "done",
+      "evidence": "/pdf-editor/llms.txt returns 200 text/plain, generated from site/catalog.mjs, linked from every page head",
+      "date": "2026-11-14"
     }
   }
 }
