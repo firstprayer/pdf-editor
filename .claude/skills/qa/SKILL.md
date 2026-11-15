@@ -58,7 +58,7 @@ BASE_PATH=/pdf-editor/ npx vite preview --port 5186 --strictPort   # run in the 
 ```
 
 The base URL for the next steps is `http://127.0.0.1:5186/pdf-editor/`. Check that
-`dist/` has `index.html` plus one folder per tool, `privacy/`, `sitemap.xml`, and
+`dist/` has `index.html` plus one folder per tool, `privacy/`, `sitemap.xml`, `llms.txt`, and
 `google3e645556460c9e98.html`.
 
 ## 3. Test input files
@@ -205,7 +205,7 @@ finish (`gh run list -R firstprayer/pdf-editor -L 1`), then:
 
 1. Check that every page and file returns 200:
    ```sh
-   for p in "" merge-pdf/ split-pdf/ organize-pdf/ rotate-pdf/ compress-pdf/ jpg-to-pdf/ pdf-to-jpg/ add-page-numbers/ watermark-pdf/ privacy/ sitemap.xml google3e645556460c9e98.html; do
+   for p in "" merge-pdf/ split-pdf/ organize-pdf/ rotate-pdf/ compress-pdf/ jpg-to-pdf/ pdf-to-jpg/ add-page-numbers/ watermark-pdf/ privacy/ sitemap.xml llms.txt google3e645556460c9e98.html; do
      printf "%s /%s\n" "$(curl -s -o /dev/null -w '%{http_code}' https://firstprayer.github.io/pdf-editor/$p)" "$p"
    done
    ```

@@ -1,4 +1,5 @@
-// Generates index.html for every page in site/catalog.mjs, plus public/sitemap.xml.
+// Generates index.html for every page in site/catalog.mjs, plus public/sitemap.xml
+// and public/llms.txt.
 // The generated files are committed so `vite` can serve them directly; this
 // script runs before dev and build, and `--check` fails if they are stale.
 import { mkdir, readFile, writeFile } from "node:fs/promises";
@@ -119,6 +120,7 @@ function headTags(tool) {
     <meta name="theme-color" content="#1d2536" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="alternate" type="text/markdown" title="llms.txt" href="${SITE.origin}${SITE.base}llms.txt" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="${SITE.name}" />
@@ -264,10 +266,40 @@ function sitemap() {
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
 }
 
+// A plain summary for AI agents and assistants (https://llmstxt.org/).
+function llmsTxt() {
+  const tools = TOOLS.filter((tool) => tool.slug);
+  const editor = TOOLS.find((tool) => !tool.slug);
+  const line = (item) => `- [${item.name}](${toolUrl(item)}): ${item.description}`;
+  return `# ${SITE.name}
+
+> Free PDF editor and nine PDF tools that run entirely in the browser. Files are processed on the user's device and never uploaded. No account, no watermark, no install.
+
+${PRIVACY_NOTE}
+
+All pages need JavaScript and a modern browser. Each page opens files from the device, changes them in the tab and downloads a new file.
+
+## Editor
+
+${line(editor)}
+
+## Tools
+
+${tools.map(line).join("\n")}
+
+## About
+
+- [${PRIVACY_PAGE.name}](${toolUrl(PRIVACY_PAGE)}): Files stay in the browser. Google Analytics counts visits and tool use, never file names or contents.
+- [Source code](${SITE.repo}): GitHub repository.
+- Contact: ${CONTACT_EMAIL}
+`;
+}
+
 const outputs = [
   ...TOOLS.map((tool) => [resolve(root, tool.slug, "index.html"), page(tool)]),
   [resolve(root, PRIVACY_PAGE.slug, "index.html"), privacyPage()],
   [resolve(root, "public/sitemap.xml"), sitemap()],
+  [resolve(root, "public/llms.txt"), llmsTxt()],
 ];
 
 let stale = 0;

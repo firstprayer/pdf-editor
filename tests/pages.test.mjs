@@ -23,3 +23,17 @@ test("the privacy page has one H1 and is in the sitemap", async () => {
   assert.ok(sitemap.includes(`<loc>${toolUrl(PRIVACY_PAGE)}</loc>`));
   assert.equal(sitemap.match(/<loc>/g).length, TOOLS.length + 1);
 });
+
+test("llms.txt lists every page and the privacy point, and every page links to it", async () => {
+  const llms = await readFile(resolve(root, "public/llms.txt"), "utf8");
+  assert.ok(llms.startsWith("# PDF Editor\n"));
+  for (const item of [...TOOLS, PRIVACY_PAGE])
+    assert.ok(llms.includes(`](${toolUrl(item)})`), item.id);
+  assert.match(llms, /never uploaded/);
+  for (const item of [...TOOLS, PRIVACY_PAGE]) {
+    assert.ok(
+      (await html(item)).includes('href="https://firstprayer.github.io/pdf-editor/llms.txt"'),
+      item.id,
+    );
+  }
+});

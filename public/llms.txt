@@ -1,0 +1,29 @@
+# PDF Editor
+
+> Free PDF editor and nine PDF tools that run entirely in the browser. Files are processed on the user's device and never uploaded. No account, no watermark, no install.
+
+Your files are opened, changed and saved by this browser tab. Nothing is uploaded, and the original file on your device is never modified. Closing the tab discards everything, so download your result first.
+
+All pages need JavaScript and a modern browser. Each page opens files from the device, changes them in the tab and downloads a new file.
+
+## Editor
+
+- [Edit PDF](https://firstprayer.github.io/pdf-editor/): Edit PDF text, add text boxes, sign, highlight, redact and reorder pages for free. Files are processed in your browser and never uploaded. No account.
+
+## Tools
+
+- [Merge PDF](https://firstprayer.github.io/pdf-editor/merge-pdf/): Combine several PDF files into one, in the order you choose. Free, no sign-up, and your files never leave your device.
+- [Split PDF](https://firstprayer.github.io/pdf-editor/split-pdf/): Split a PDF into single pages or page ranges, or extract the pages you pick into a new file. Runs in your browser; nothing is uploaded.
+- [Organize PDF](https://firstprayer.github.io/pdf-editor/organize-pdf/): Rearrange PDF pages by dragging, delete the ones you do not need, rotate pages and add pages from other PDFs. Free and private: files stay on your device.
+- [Rotate PDF](https://firstprayer.github.io/pdf-editor/rotate-pdf/): Rotate all pages of a PDF or only the pages you pick, by 90 or 180 degrees, and save the result. Free, in your browser, with no upload.
+- [Compress PDF](https://firstprayer.github.io/pdf-editor/compress-pdf/): Make a PDF smaller by recompressing its photos or rebuilding pages as images. See the new size before you download. Runs in your browser.
+- [JPG to PDF](https://firstprayer.github.io/pdf-editor/jpg-to-pdf/): Turn JPG, PNG and WebP images into one PDF. Choose page size, orientation and margins. Free, no sign-up, and images never leave your device.
+- [PDF to JPG](https://firstprayer.github.io/pdf-editor/pdf-to-jpg/): Save each page of a PDF as a JPG or PNG image at the resolution you choose. Free and private: conversion happens in your browser.
+- [Add page numbers](https://firstprayer.github.io/pdf-editor/add-page-numbers/): Number the pages of a PDF: choose the position, format, size and starting number, and skip a cover page. Preview before download. Nothing is uploaded.
+- [Watermark PDF](https://firstprayer.github.io/pdf-editor/watermark-pdf/): Stamp a text watermark such as DRAFT or CONFIDENTIAL on every PDF page. Set size, angle, color and transparency, and preview it first. No upload.
+
+## About
+
+- [Privacy policy](https://firstprayer.github.io/pdf-editor/privacy/): Files stay in the browser. Google Analytics counts visits and tool use, never file names or contents.
+- [Source code](https://github.com/firstprayer/pdf-editor): GitHub repository.
+- Contact: mle.ultimate@gmail.com
