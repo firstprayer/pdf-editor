@@ -13,8 +13,8 @@
     },
     "gsc-sitemap": {
       "status": "waiting",
-      "reason": "2026-11-14: still Couldn't fetch, never read, although the file returns 200 as XML with 11 URLs. Root robots.txt with a Sitemap line is in firstprayer.github.com PR #2",
-      "recheck": "2026-11-28"
+      "reason": "2026-11-18: resubmitted after the root robots.txt went live; Search Console still shows Couldn't fetch right after submission. The file returns 200 application/xml with 14 URLs",
+      "recheck": "2026-11-25"
     },
     "gsc-indexed": {
       "status": "waiting",
@@ -65,6 +65,26 @@
       "status": "done",
       "evidence": "/pdf-editor/llms.txt returns 200 text/plain, generated from site/catalog.mjs, linked from every page head",
       "date": "2026-11-14"
+    },
+    "root-robots": {
+      "status": "done",
+      "evidence": "https://firstprayer.github.io/robots.txt returns 200 with a Sitemap line (firstprayer.github.com#2)",
+      "date": "2026-11-18"
+    },
+    "task-pages": {
+      "status": "done",
+      "evidence": "sign-pdf, redact-pdf and add-text-to-pdf live with their titles; sitemap lists 14 URLs; production e2e and redaction check pass (pdf-editor#3)",
+      "date": "2026-11-18"
+    },
+    "repo-metadata": {
+      "status": "done",
+      "evidence": "gh repo view: description and 12 topics set; GraphQL usesCustomOpenGraphImage true",
+      "date": "2026-11-18"
+    },
+    "perf-mobile": {
+      "status": "partial",
+      "reason": "PDF.js loads on first use and GA hosts are preconnected (pdf-editor#2); local Lighthouse mobile 62-63 to 69. pdf-lib still loads up front",
+      "recheck": "2026-11-25"
     }
   }
 }
