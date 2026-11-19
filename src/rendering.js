@@ -1,13 +1,21 @@
 import workerUrl from "pdfjs-dist/build/pdf.worker.min.mjs?url";
 
 // PDF.js is about a third of the app's JavaScript and is only needed once a
-// file is opened, so it loads on first use instead of with the page.
+// file is opened, so it loads on first use instead of with the page. A failed
+// load is not cached, so the next open retries (flaky network, or a deploy
+// that replaced the chunk while the tab was open).
 let pdfjsModule;
 function loadPdfjs() {
-  pdfjsModule ??= import("pdfjs-dist").then((pdfjs) => {
-    pdfjs.GlobalWorkerOptions.workerSrc = workerUrl;
-    return pdfjs;
-  });
+  pdfjsModule ??= import("pdfjs-dist").then(
+    (pdfjs) => {
+      pdfjs.GlobalWorkerOptions.workerSrc = workerUrl;
+      return pdfjs;
+    },
+    (error) => {
+      pdfjsModule = undefined;
+      throw error;
+    },
+  );
   return pdfjsModule;
 }
 
