@@ -121,6 +121,8 @@ function headTags(tool) {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="alternate" type="text/markdown" title="llms.txt" href="${SITE.origin}${SITE.base}llms.txt" />
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
+    <link rel="preconnect" href="https://www.google-analytics.com" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="${SITE.name}" />

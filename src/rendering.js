@@ -1,9 +1,18 @@
-import * as pdfjs from "pdfjs-dist";
 import workerUrl from "pdfjs-dist/build/pdf.worker.min.mjs?url";
 
-pdfjs.GlobalWorkerOptions.workerSrc = workerUrl;
+// PDF.js is about a third of the app's JavaScript and is only needed once a
+// file is opened, so it loads on first use instead of with the page.
+let pdfjsModule;
+function loadPdfjs() {
+  pdfjsModule ??= import("pdfjs-dist").then((pdfjs) => {
+    pdfjs.GlobalWorkerOptions.workerSrc = workerUrl;
+    return pdfjs;
+  });
+  return pdfjsModule;
+}
 
 export async function openRenderer(bytes) {
+  const pdfjs = await loadPdfjs();
   const base = `${import.meta.env.BASE_URL}pdf-assets/`;
   const task = pdfjs.getDocument({
     data: bytes.slice(),
