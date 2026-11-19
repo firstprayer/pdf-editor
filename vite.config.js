@@ -1,6 +1,6 @@
 import { resolve } from "node:path";
 import { defineConfig } from "vite";
-import { PRIVACY_PAGE, TOOLS } from "./site/catalog.mjs";
+import { EDITOR_PAGES, PRIVACY_PAGE, TOOLS } from "./site/catalog.mjs";
 
 // GitHub Pages serves this project from /<repo>/. The deploy workflow sets
 // BASE_PATH; local development keeps the site at the server root.
@@ -13,7 +13,7 @@ export default defineConfig({
     target: "es2022",
     rollupOptions: {
       input: Object.fromEntries(
-        [...TOOLS, PRIVACY_PAGE].map((item) => [
+        [...TOOLS, ...EDITOR_PAGES, PRIVACY_PAGE].map((item) => [
           item.id,
           resolve(import.meta.dirname, item.slug, "index.html"),
         ]),

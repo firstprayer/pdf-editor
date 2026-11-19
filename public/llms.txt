@@ -22,6 +22,14 @@ All pages need JavaScript and a modern browser. Each page opens files from the d
 - [Add page numbers](https://firstprayer.github.io/pdf-editor/add-page-numbers/): Number the pages of a PDF: choose the position, format, size and starting number, and skip a cover page. Preview before download. Nothing is uploaded.
 - [Watermark PDF](https://firstprayer.github.io/pdf-editor/watermark-pdf/): Stamp a text watermark such as DRAFT or CONFIDENTIAL on every PDF page. Set size, angle, color and transparency, and preview it first. No upload.
 
+## Editor tasks
+
+These pages open the same editor with a guide for one task.
+
+- [Sign PDF](https://firstprayer.github.io/pdf-editor/sign-pdf/): Draw or type your signature and place it on any page of a PDF. Free, no account, and the file is processed in your browser, never uploaded.
+- [Redact PDF](https://firstprayer.github.io/pdf-editor/redact-pdf/): Black out names, numbers and other sensitive content in a PDF. Redacted text is removed from the downloaded file, not just covered. Runs in your browser; nothing is uploaded.
+- [Add text to PDF](https://firstprayer.github.io/pdf-editor/add-text-to-pdf/): Type anywhere on a PDF to add notes, dates, labels or answers, or change an existing line. Free, in your browser, with no upload and no account.
+
 ## About
 
 - [Privacy policy](https://firstprayer.github.io/pdf-editor/privacy/): Files stay in the browser. Google Analytics counts visits and tool use, never file names or contents.

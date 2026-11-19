@@ -143,7 +143,7 @@ export const TOOLS = [
     nav: "Organize",
     name: "Organize PDF",
     entry: "/src/tools/organize.jsx",
-    title: "Organize PDF Pages Free: Reorder, Delete and Add Pages",
+    title: "Reorder PDF Pages Free: Rearrange, Delete and Rotate",
     description:
       "Rearrange PDF pages by dragging, delete the ones you do not need, rotate pages and add pages from other PDFs. Free and private: files stay on your device.",
     h1: "Reorder, delete and rotate PDF pages",
@@ -374,6 +374,133 @@ export const TOOLS = [
         a: "Not in this tool yet. To place a logo, use the editor’s Image tool on the pages you need.",
       },
       FREE,
+    ],
+  },
+];
+
+// Landing pages for one editor task each. They load the same editor as the
+// home page and add a guide for that task. They are not in the site bar; the
+// "More PDF tools" list, the sitemap and llms.txt link to them.
+const LIMITS = {
+  q: "What are the limits?",
+  a: "Up to 50 MB per PDF, 100 MB in total and 200 pages. Password-protected PDFs are not supported.",
+};
+
+export const EDITOR_PAGES = [
+  {
+    id: "sign",
+    howTo: "How to sign a PDF",
+    slug: "sign-pdf",
+    name: "Sign PDF",
+    entry: "/src/main.jsx",
+    title: "Sign PDF Online Free: Add Your Signature Without Uploading",
+    description:
+      "Draw or type your signature and place it on any page of a PDF. Free, no account, and the file is processed in your browser, never uploaded.",
+    h1: "Sign a PDF in your browser",
+    lead: "Open the PDF, draw or type your signature, click where it goes and download the signed file. The document is processed only in this browser tab and never uploaded.",
+    steps: [
+      "Select Open PDF and choose the document.",
+      "Select Sign, then draw your signature or type your name.",
+      "Click the page where the signature goes. Drag it to move it, and set its width in the panel.",
+      "Select Download to save the signed PDF.",
+    ],
+    featureList: [
+      "Draw a signature",
+      "Type a signature",
+      "Place it on any page",
+      "Add the date or your name with a text box",
+    ],
+    faq: [
+      UPLOAD,
+      {
+        q: "Is this a digital signature?",
+        a: "No. It places an image of your drawn or typed signature on the page. It is not a certificate-based digital signature, so it adds no cryptographic proof of who signed and does not detect later changes.",
+      },
+      {
+        q: "Can I add the date or my printed name?",
+        a: "Yes. Select Add text and click where the date or name should go.",
+      },
+      FREE,
+      LIMITS,
+    ],
+  },
+  {
+    id: "redact",
+    howTo: "How to redact a PDF",
+    slug: "redact-pdf",
+    name: "Redact PDF",
+    entry: "/src/main.jsx",
+    title: "Redact PDF Free: Permanently Remove Text in Your Browser",
+    description:
+      "Black out names, numbers and other sensitive content in a PDF. Redacted text is removed from the downloaded file, not just covered. Runs in your browser; nothing is uploaded.",
+    h1: "Redact a PDF and remove the text for good",
+    lead: "Drag over what you need to hide and download. Each redacted page is rebuilt from pixels, so the hidden text cannot be copied, searched or recovered from the new file. Your document is processed in this browser tab and never uploaded.",
+    steps: [
+      "Select Open PDF and choose the document.",
+      "Select Redact and drag over each area you want to remove.",
+      "Check every page, then select Download.",
+    ],
+    featureList: [
+      "Drag to redact any area",
+      "Redacted pages are rebuilt from pixels",
+      "Original metadata and bookmarks are not copied",
+    ],
+    faq: [
+      {
+        q: "Is the text really removed, or just covered?",
+        a: "Removed. A redacted page is rebuilt from pixels with the black boxes already in place, so the original text, images and annotation text on that page are not copied into the download. This is tested by redacting a marker word and searching the downloaded file’s text, annotations, metadata, bookmarks and raw data for it.",
+      },
+      {
+        q: "What happens to the rest of a redacted page?",
+        a: "It stays visible but becomes an image, so its text can no longer be selected or searched. Pages without redactions keep their text.",
+      },
+      {
+        q: "Is the document’s metadata removed?",
+        a: "The download is a new file. It does not copy the original title, subject, keywords or bookmarks.",
+      },
+      {
+        q: "Can it find and redact a word everywhere?",
+        a: "No. You mark each area yourself, so check every page before you download.",
+      },
+      UPLOAD,
+      LIMITS,
+    ],
+  },
+  {
+    id: "add-text",
+    howTo: "How to add text to a PDF",
+    slug: "add-text-to-pdf",
+    name: "Add text to PDF",
+    entry: "/src/main.jsx",
+    title: "Add Text to PDF Free: Type on a PDF Online",
+    description:
+      "Type anywhere on a PDF to add notes, dates, labels or answers, or change an existing line. Free, in your browser, with no upload and no account.",
+    h1: "Add text to a PDF",
+    lead: "Click anywhere on a page and type. Pick the typeface, size and color, move the text where you want it and download the new PDF. The file is processed in your browser and never uploaded.",
+    steps: [
+      "Select Open PDF and choose the document.",
+      "Select Add text and click where the text should go.",
+      "Type in the panel and set the typeface, size and color. Drag the text to move it.",
+      "Select Download to save the PDF.",
+    ],
+    featureList: [
+      "Add text boxes anywhere",
+      "Helvetica, Times Roman and Courier",
+      "Set size and color",
+      "Replace a line of existing text",
+    ],
+    faq: [
+      UPLOAD,
+      {
+        q: "Can I fill in a PDF form?",
+        a: "You can type on top of any form, including scanned ones. Interactive form fields are not supported.",
+      },
+      {
+        q: "Can I change text that is already in the PDF?",
+        a: "Yes, with Edit text, for horizontal, selectable lines. The replacement uses a standard PDF font on a white background, so it will not match the original font exactly.",
+      },
+      FREE,
+      LIMITS,
     ],
   },
 ];

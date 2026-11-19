@@ -51,6 +51,21 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://firstprayer.github.io/pdf-editor/sign-pdf/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://firstprayer.github.io/pdf-editor/redact-pdf/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://firstprayer.github.io/pdf-editor/add-text-to-pdf/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://firstprayer.github.io/pdf-editor/privacy/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>

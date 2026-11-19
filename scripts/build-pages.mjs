@@ -1,4 +1,5 @@
-// Generates index.html for every page in site/catalog.mjs, plus public/sitemap.xml
+// Generates index.html for every page in site/catalog.mjs (tools, editor task pages
+// and the privacy page), plus public/sitemap.xml
 // and public/llms.txt.
 // The generated files are committed so `vite` can serve them directly; this
 // script runs before dev and build, and `--check` fails if they are stale.
@@ -6,6 +7,7 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import {
   CONTACT_EMAIL,
+  EDITOR_PAGES,
   PRIVACY_NOTE,
   PRIVACY_PAGE,
   SITE,
@@ -153,8 +155,10 @@ function siteFooter(current) {
         </footer>`;
 }
 
+const PAGES = [...TOOLS, ...EDITOR_PAGES];
+
 function page(tool) {
-  const others = TOOLS.filter((other) => other.id !== tool.id);
+  const others = PAGES.filter((other) => other.id !== tool.id);
   return `<!doctype html>
 <html lang="en">
   <head>
@@ -259,7 +263,7 @@ ${siteFooter(item)}
 
 function sitemap() {
   const priority = (item) => (item === PRIVACY_PAGE ? "0.3" : item.slug ? "0.8" : "1.0");
-  const urls = [...TOOLS, PRIVACY_PAGE]
+  const urls = [...PAGES, PRIVACY_PAGE]
     .map(
       (item) =>
         `  <url>\n    <loc>${toolUrl(item)}</loc>\n    <changefreq>monthly</changefreq>\n    <priority>${priority(item)}</priority>\n  </url>`,
@@ -289,6 +293,12 @@ ${line(editor)}
 
 ${tools.map(line).join("\n")}
 
+## Editor tasks
+
+These pages open the same editor with a guide for one task.
+
+${EDITOR_PAGES.map(line).join("\n")}
+
 ## About
 
 - [${PRIVACY_PAGE.name}](${toolUrl(PRIVACY_PAGE)}): Files stay in the browser. Google Analytics counts visits and tool use, never file names or contents.
@@ -298,7 +308,7 @@ ${tools.map(line).join("\n")}
 }
 
 const outputs = [
-  ...TOOLS.map((tool) => [resolve(root, tool.slug, "index.html"), page(tool)]),
+  ...PAGES.map((tool) => [resolve(root, tool.slug, "index.html"), page(tool)]),
   [resolve(root, PRIVACY_PAGE.slug, "index.html"), privacyPage()],
   [resolve(root, "public/sitemap.xml"), sitemap()],
   [resolve(root, "public/llms.txt"), llmsTxt()],
@@ -318,6 +328,6 @@ for (const [path, content] of outputs) {
 }
 if (stale) process.exit(1);
 
-export const htmlInputs = [...TOOLS, PRIVACY_PAGE].map((item) =>
+export const htmlInputs = [...PAGES, PRIVACY_PAGE].map((item) =>
   resolve(root, item.slug, "index.html"),
 );
