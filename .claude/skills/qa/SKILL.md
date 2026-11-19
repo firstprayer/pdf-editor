@@ -42,7 +42,7 @@ npm run format:check
 npm test
 ```
 
-Pass: lint and format clean, and all Node tests pass (27 at the time of
+Pass: lint and format clean, and all Node tests pass (31 at the time of
 writing). `npm test` also fails if the generated pages are stale (run
 `npm run pages`). The tests cover:
 - the editor's export, redaction and text replacement;
@@ -58,7 +58,8 @@ BASE_PATH=/pdf-editor/ npx vite preview --port 5186 --strictPort   # run in the 
 ```
 
 The base URL for the next steps is `http://127.0.0.1:5186/pdf-editor/`. Check that
-`dist/` has `index.html` plus one folder per tool, `privacy/`, `sitemap.xml`, `llms.txt`, and
+`dist/` has `index.html` plus one folder per tool, the editor task pages
+(`sign-pdf/`, `redact-pdf/`, `add-text-to-pdf/`), `privacy/`, `sitemap.xml`, `llms.txt`, and
 `google3e645556460c9e98.html`.
 
 ## 3. Test input files
@@ -102,6 +103,24 @@ case fails.
 | watermark | `/watermark-pdf/` | `three-pages.pdf` | Add watermark and download ("CONFIDENTIAL", diagonal) | PDF, 3 pages |
 
 Pass: `All 11 cases passed`, with no page errors.
+
+### Redaction check (automated)
+
+Run it before any change to redaction, export or the redact page copy, and
+before every deploy:
+
+```sh
+node .claude/skills/qa/scripts/redaction.mjs http://127.0.0.1:5186/pdf-editor/redact-pdf/ <work>
+```
+
+It builds a PDF with a marker string in the page text under the redaction, a
+note annotation, the title, subject, keywords and a bookmark, checks every
+marker is findable in that input, redacts the marker line in the editor and
+downloads. It then searches the download's extracted text, annotations,
+metadata, outline and every decompressed object (plain and hex) for each
+marker. Pass: `PASS every marker is gone from the download`, with the page 2
+control text still extractable. The redact page and the home FAQ claim the
+text is removed; do not ship if this fails.
 
 ## 5. Manual checks per tool
 
@@ -170,7 +189,7 @@ the static and render tiers on every page:
 
 ```sh
 H=~/.codex/skills/hallmark/scripts/sloplint.mjs
-for slug in "" merge-pdf split-pdf organize-pdf rotate-pdf compress-pdf jpg-to-pdf pdf-to-jpg add-page-numbers watermark-pdf; do
+for slug in "" merge-pdf split-pdf organize-pdf rotate-pdf compress-pdf jpg-to-pdf pdf-to-jpg add-page-numbers watermark-pdf sign-pdf redact-pdf add-text-to-pdf; do
   node $H src/styles.css src/site.css src/base.css src/tokens.css ${slug:-.}/index.html src/tools src/App.jsx \
     --scope app --genre modern-minimal --render --url http://127.0.0.1:5186/pdf-editor/$slug${slug:+/}
 done
@@ -205,13 +224,14 @@ finish (`gh run list -R firstprayer/pdf-editor -L 1`), then:
 
 1. Check that every page and file returns 200:
    ```sh
-   for p in "" merge-pdf/ split-pdf/ organize-pdf/ rotate-pdf/ compress-pdf/ jpg-to-pdf/ pdf-to-jpg/ add-page-numbers/ watermark-pdf/ privacy/ sitemap.xml llms.txt google3e645556460c9e98.html; do
+   for p in "" merge-pdf/ split-pdf/ organize-pdf/ rotate-pdf/ compress-pdf/ jpg-to-pdf/ pdf-to-jpg/ add-page-numbers/ watermark-pdf/ sign-pdf/ redact-pdf/ add-text-to-pdf/ privacy/ sitemap.xml llms.txt google3e645556460c9e98.html; do
      printf "%s /%s\n" "$(curl -s -o /dev/null -w '%{http_code}' https://firstprayer.github.io/pdf-editor/$p)" "$p"
    done
    ```
-   The sitemap must list 11 `<loc>` entries.
-2. Run the end-to-end test on production:
-   `node .claude/skills/qa/scripts/e2e.mjs https://firstprayer.github.io/pdf-editor/ <work>`.
+   The sitemap must list 14 `<loc>` entries.
+2. Run the end-to-end test and the redaction check on production:
+   `node .claude/skills/qa/scripts/e2e.mjs https://firstprayer.github.io/pdf-editor/ <work>` and
+   `node .claude/skills/qa/scripts/redaction.mjs https://firstprayer.github.io/pdf-editor/redact-pdf/ <work>`.
 3. **GA4:** property "PDF Editor", ID `G-KG29EMDGX2`, account `a411435088`, property
    `p562332431`. In a real (non-headless) browser, open a tool page, run the snippet
    below in the console, then use the tool. It stops the actual file download but
