@@ -432,7 +432,7 @@ export const EDITOR_PAGES = [
     entry: "/src/main.jsx",
     title: "Redact PDF Free: Permanently Remove Text in Your Browser",
     description:
-      "Black out names, numbers and other sensitive content in a PDF. Redacted text is removed from the downloaded file, not just covered. Runs in your browser; nothing is uploaded.",
+      "Black out names, numbers and other sensitive content in a PDF. Redacted text is removed from the file, not just covered. Runs in your browser; nothing is uploaded.",
     h1: "Redact a PDF and remove the text for good",
     lead: "Drag over what you need to hide and download. Each redacted page is rebuilt from pixels, so the hidden text cannot be copied, searched or recovered from the new file. Your document is processed in this browser tab and never uploaded.",
     steps: [
